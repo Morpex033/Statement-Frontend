@@ -12,15 +12,21 @@ export class InstituteService {
 
   constructor(private http: HttpClient) {}
 
-  getInstitutes(params?: {
-    pageSize: number;
-    pageNumber: number;
-  }): Observable<EntityResponse> {
+  getInstitutes(
+    params?: {
+      pageSize: number;
+      pageNumber: number;
+    },
+    name?: string
+  ): Observable<EntityResponse> {
     let httpParams = new HttpParams();
     if (params) {
       httpParams = httpParams
         .set('pageSize', params.pageSize.toString())
         .set('pageNumber', params.pageNumber.toString());
+    }
+    if (name) {
+      httpParams = httpParams.set('name', name);
     }
     return this.http.get<EntityResponse>(this.apiUrl, { params: httpParams });
   }

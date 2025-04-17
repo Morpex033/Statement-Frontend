@@ -7,6 +7,7 @@ import { GroupComponent } from './components/group/group.component';
 import { GradeComponent } from './components/grade/grade.component';
 import { InstituteComponent } from './components/institute/institute.component';
 import { StatementComponent } from './components/statement/statement.component';
+import { ExcelViewerComponent } from './components/excel-viewer/excel-viewer.component';
 
 export const routes: Routes = [
   { path: 'students', component: StudentComponent },
@@ -17,4 +18,5 @@ export const routes: Routes = [
   { path: 'grades', component: GradeComponent },
   { path: 'institutes', component: InstituteComponent },
   { path: 'statements', component: StatementComponent },
+  { path: 'excel-viewer/:id', component: ExcelViewerComponent },
 ];

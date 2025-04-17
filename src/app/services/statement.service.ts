@@ -42,4 +42,14 @@ export class StatementService {
       params: httpParams,
     });
   }
+
+  createStatement(instituteId: string): Observable<any> {
+    return this.http.post<any>(this.apiUrl + `/institute/${instituteId}`, null);
+  }
+
+  getExcel(id: string): Observable<any> {
+    return this.http.get<any>(this.apiUrl + `/${id}/excel`, {
+      responseType: 'blob' as 'json',
+    });
+  }
 }

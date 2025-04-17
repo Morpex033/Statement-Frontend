@@ -91,6 +91,14 @@
       >
         Create grade
       </button>
+
+      <div *ngIf="successMessage" class="alert alert-success mt-3">
+        {{ successMessage }}
+      </div>
+
+      <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+        {{ errorMessage }}
+      </div>
     </form>
   </div>
 
@@ -124,10 +132,7 @@
 
           <button class="delete-grade" (click)="onDelete(grade)">Delete</button>
 
-          <div
-            *ngIf="isUpdatingMap[grade.id]"
-            class="update-grade-form"
-          >
+          <div *ngIf="isUpdatingMap[grade.id]" class="update-grade-form">
             <form (ngSubmit)="saveUpdate()" #gradeForm="ngForm">
               <div class="form-group">
                 <label for="value">Grade</label>

@@ -1,151 +1,236 @@
 .container {
-    width: 60%;
-    max-width: 800px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 50vh;
-    margin: auto;
+  width: 60%;
+  max-width: 800px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  margin: auto;
+}
+
+.title {
+  color: #4caf50;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.no-statements {
+  font-size: 1.2rem;
+  color: #888;
+}
+
+.statement-list {
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+}
+
+.statement-item {
+  margin-bottom: 15px;
+}
+
+.statement-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
   }
-  
-  .title {
-    color: #4caf50;
-    font-size: 2rem;
-    margin-bottom: 20px;
+}
+
+.statement-info {
+  text-align: left;
+}
+
+.statement-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.statement-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.view-btn {
+  padding: 8px 16px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  background-color: #4caf50;
+  color: white;
+
+  &:hover {
+    background-color: #45a049;
   }
-  
-  .no-statements {
-    font-size: 1.2rem;
-    color: #888;
+}
+
+.statement-details {
+  background-color: #eef5ff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  margin-top: 5px;
+  overflow: hidden;
+  opacity: 0;
+  max-height: 0;
+  transition: all 0.3s ease;
+
+  &.visible {
+    opacity: 1;
+    max-height: 1000px; /* Блок теперь может увеличиваться, не ограничиваясь 500px */
   }
-  
-  .statement-list {
-    list-style-type: none;
-    padding: 0;
+}
+
+.statements {
+  font-weight: bold;
+  color: #333;
+  margin-top: 10px;
+  display: block;
+}
+
+.grade-list {
+  display: flex;
+  flex-wrap: wrap; /* Используем обертку для гибкого распределения */
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start; /* Это обеспечит правильное распределение элементов */
+  max-height: 300px; /* Ограничение высоты блока */
+  overflow-y: auto; /* Добавление прокрутки, если оценок слишком много */
+}
+
+.grade-value {
+  background-color: #4caf50;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+.pagination-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.pagination-buttons button {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  &:hover {
+    background-color: #45a049;
+  }
+}
+
+.create-statement-button {
+  margin: 20px auto;
+  display: block;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+
+  &:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+}
+
+.create-statement-form {
+  width: 60%;
+  max-width: 600px;
+  background-color: #fff;
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+
+  .form-group {
+    position: relative;
+  }
+
+  .form-control {
     width: 100%;
-  }
-  
-  .statement-item {
-    margin-bottom: 15px;
-  }
-  
-  .statement-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #f9f9f9;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  
-    &:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-    }
-  }
-  
-  .statement-info {
-    text-align: left;
-  }
-  
-  .statement-name {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .statement-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .view-btn {
-    padding: 8px 16px;
+    padding: 12px 15px;
     font-size: 1rem;
-    border: none;
+    border: 2px solid #ddd;
     border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    background-color: #4caf50;
-    color: white;
-  
-    &:hover {
-      background-color: #45a049;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border-color: #4caf50;
+      box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+    }
+
+    &::placeholder {
+      color: #aaa;
     }
   }
-  
-  .statement-details {
-    background-color: #eef5ff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+
+  .dropdown-menu {
+    position: absolute;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
     margin-top: 5px;
-    overflow: hidden;
-    opacity: 0;
-    max-height: 0;
-    transition: all 0.3s ease;
-  
-    &.visible {
-      opacity: 1;
-      max-height: 1000px; /* Блок теперь может увеличиваться, не ограничиваясь 500px */
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    list-style: none;
+    padding: 0;
+
+    li {
+      padding: 10px 15px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: #f0f0f0;
+      }
     }
   }
-  
-  .statements {
-    font-weight: bold;
-    color: #333;
-    margin-top: 10px;
-    display: block;
-  }
-  
-  .grade-list {
-    display: flex;
-    flex-wrap: wrap; /* Используем обертку для гибкого распределения */
-    gap: 10px;
-    align-items: center;
-    justify-content: flex-start; /* Это обеспечит правильное распределение элементов */
-    max-height: 300px; /* Ограничение высоты блока */
-    overflow-y: auto; /* Добавление прокрутки, если оценок слишком много */
-  }
-  
-  .grade-value {
-    background-color: #4caf50;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
-    display: inline-block;
-  }
-  
-  .pagination-buttons {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-  }
-  
-  .pagination-buttons button {
-    padding: 10px 20px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  
-    &:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
-    }
-  
-    &:hover {
-      background-color: #45a049;
-    }
-  }
-  
+}

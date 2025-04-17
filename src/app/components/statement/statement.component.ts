@@ -16,6 +16,7 @@ import { TeacherService } from '../../services/teacher.service';
 import { StudentService } from '../../services/student.service';
 import { SubjectService } from '../../services/subject.service';
 import { combineLatest, map, Observable } from 'rxjs';
+import { InstituteService } from '../../services/institute.service';
 
 @Component({
   selector: 'app-statement',
@@ -54,11 +55,21 @@ export class StatementComponent {
   pageSize: number = 10;
   hasMoreStatements: boolean = true;
 
+  filteredInstitute: any[] = [];
+
+  institute = {
+    name: '',
+    id: '',
+  };
+
+  isCreating: boolean = false;
+
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
+
   constructor(
     private statementService: StatementService,
-    private teacherService: TeacherService,
-    private studentService: StudentService,
-    private subjectService: SubjectService
+    private instituteService: InstituteService
   ) {}
 
   ngOnInit() {
@@ -107,30 +118,52 @@ export class StatementComponent {
     }
   }
 
-  getFullInfo(
-    teacherId: string,
-    studentId: string,
-    subjectId: string
-  ): Observable<string> {
-    return combineLatest([
-      this.teacherService
-        .getById(teacherId)
-        .pipe(
-          map((teacher: any) => `${teacher.firstName} ${teacher.lastName}`)
-        ),
-      this.studentService
-        .getById(studentId)
-        .pipe(
-          map((student: any) => `${student.firstName} ${student.lastName}`)
-        ),
-      this.subjectService
-        .getById(subjectId)
-        .pipe(map((subject: any) => subject.name)),
-    ]).pipe(
-      map(
-        ([teacherName, studentName, subjectName]) =>
-          `${teacherName} | ${studentName} | ${subjectName}`
+  onInstituteInput(value: any) {
+    const query = value.target.value;
+    this.instituteService
+      .getInstitutes(
+        { pageNumber: this.currentPage, pageSize: this.pageSize },
+        query
       )
-    );
+      .subscribe({
+        next: (response: EntityResponse) => {
+          this.filteredInstitute = response.data;
+        },
+      });
+  }
+
+  onSelectedInstitute(institute: any) {
+    this.institute.id = institute.id;
+    this.institute.name = institute.name;
+    this.filteredInstitute = [];
+  }
+
+  createStatement() {
+    this.isCreating = !this.isCreating;
+  }
+
+  onSubmitCreate() {
+    this.successMessage = null;
+    this.errorMessage = null;
+
+    this.statementService.createStatement(this.institute.id).subscribe({
+      next: (response) => {
+        this.successMessage = 'Statement was successfully created.';
+        this.institute = {
+          name: '',
+          id: '',
+        };
+
+        this.loadStatements(this.currentPage);
+      },
+      error: (error) => {
+        this.errorMessage = 'Failed to create Statement. Please try again.';
+        console.error(error);
+      },
+    });
+  }
+
+  redirectOnExcelViewer(statementId: string) {
+    window.open(`/excel-viewer/${statementId}`, '_blank');
   }
 }

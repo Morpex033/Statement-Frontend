@@ -70,6 +70,9 @@ export class GradeComponent implements OnInit {
 
   isUpdatingMap: { [key: string]: boolean } = {};
 
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
+
   constructor(
     private gradeService: GradeService,
     private studentService: StudentService,
@@ -196,16 +199,25 @@ export class GradeComponent implements OnInit {
   }
 
   onSubmit() {
-    this.gradeService.createGrade(this.newGrade).subscribe((response) => {
-      console.log(response);
-      this.newGrade = this.createEmptyGrade();
+    this.successMessage = null;
+    this.errorMessage = null;
+
+    this.gradeService.createGrade(this.newGrade).subscribe({
+      next: (response) => {
+        this.successMessage = 'Grade was successfully created.';
+        this.newGrade = this.createEmptyGrade();
+      },
+      error: (error) => {
+        this.errorMessage = 'Failed to create grade. Please try again.';
+        console.error(error);
+      },
     });
   }
 
   createEmptyGrade() {
     return {
       id: '',
-      value: null,
+      value: 0,
       studentId: '',
       studentName: '',
       subjectId: '',

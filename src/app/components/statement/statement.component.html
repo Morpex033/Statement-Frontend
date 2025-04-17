@@ -1,6 +1,52 @@
 <div class="container">
   <h1 class="title">Statement List</h1>
 
+  <button class="create-statement-button" (click)="createStatement()">
+    Create Statement
+  </button>
+
+  <div *ngIf="isCreating" class="create-statement-form">
+    <form (ngSubmit)="onSubmitCreate()" #statementForm="ngForm">
+      <div class="form-group">
+        <label for="instituteId"> Institute</label>
+        <input
+          type="text"
+          id="instituteId"
+          name="instituteId"
+          [(ngModel)]="institute.name"
+          (input)="onInstituteInput($event)"
+          class="form-control"
+          placeholder="Institute name"
+        />
+
+        <ul *ngIf="filteredInstitute.length > 0" class="dropdown-menu">
+          <li
+            *ngFor="let institute of filteredInstitute"
+            (click)="onSelectedInstitute(institute)"
+          >
+            {{ institute.name }}
+          </li>
+        </ul>
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="statementForm.invalid"
+        class="btn btn-primary"
+      >
+        Create Statement
+      </button>
+
+      <div *ngIf="successMessage" class="alert alert-success mt-3">
+        {{ successMessage }}
+      </div>
+
+      <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+        {{ errorMessage }}
+      </div>
+    </form>
+  </div>
+
   <div *ngIf="statements.length === 0" class="no-statements">No statements</div>
 
   <div class="statement-list">
@@ -13,8 +59,11 @@
           <button class="view-btn" (click)="toggleDetails(statement.id)">
             View Details
           </button>
-          <button class="view-btn">
-            View Exel
+          <button
+            class="view-btn"
+            (click)="redirectOnExcelViewer(statement.id)"
+          >
+            View Excel
           </button>
         </div>
       </div>

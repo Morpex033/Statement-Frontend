@@ -1,0 +1,54 @@
+<div class="excel-viewer">
+  <!-- Кнопки для переключения листов -->
+  <div class="sheet-buttons">
+    <button
+      *ngFor="let sheet of allSheets"
+      (click)="switchSheet(sheet)"
+      [class.active]="sheet === allSheets[currentSheetIndex]"
+    >
+      {{ sheet }}
+    </button>
+  </div>
+
+  <div class="update-buttons">
+    <button *ngIf="!isUpdating" (click)="updateExcel()" class="update-button">
+      Update table
+    </button>
+    <button
+      *ngIf="isUpdating"
+      (click)="saveUpdate()"
+      class="save-update-button"
+    >
+      Save change
+    </button>
+    <button
+      *ngIf="isUpdating"
+      (click)="cancelUpdate()"
+      class="cancel-update-button"
+    >
+      Cancel change
+    </button>
+  </div>
+
+  <!-- Таблица с данными текущего листа -->
+  <table *ngIf="tableData.length > 0">
+    <thead>
+      <tr>
+        <th *ngFor="let header of tableData[0]">{{ header }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of tableData.slice(1); let rowIndex = index">
+        <td *ngFor="let cell of row; let colIndex = index">
+          <input
+            [value]="cell"
+            (input)="onCellChange(rowIndex + 1, colIndex, $event)"
+            [readonly]="!isUpdating"
+          />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="tableData.length === 0">Данные не загружены.</div>
+</div>
