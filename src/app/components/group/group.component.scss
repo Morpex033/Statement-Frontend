@@ -1,0 +1,145 @@
+.container {
+  width: 60%;
+  max-width: 800px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  margin: auto;
+}
+
+.title {
+  color: #4caf50;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.no-groups {
+  font-size: 1.2rem;
+  color: #888;
+}
+
+.group-list {
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+}
+
+.group-item {
+  margin-bottom: 10px;
+}
+
+.group-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.group-info {
+  text-align: left;
+}
+
+.group-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.group-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.view-btn {
+  padding: 8px 16px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  background-color: #4caf50;
+  color: white;
+
+  &:hover {
+    background-color: #45a049;
+  }
+}
+
+.group-details {
+  background-color: #eef5ff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  margin-top: 5px;
+  overflow: hidden;
+}
+
+.group-departments,
+.group-students {
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-top: 10px;
+}
+
+.group-details-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+}
+
+.detail-title {
+  font-weight: bold;
+  color: #333;
+  flex: 1;
+  text-align: left;
+}
+
+.detail-value {
+  color: #555;
+  flex: 2;
+  text-align: right;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 500px;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 500px;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+    max-height: 0;
+  }
+}

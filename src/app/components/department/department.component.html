@@ -1,0 +1,90 @@
+<div class="container">
+  <h1 class="title">Department List</h1>
+
+  <div *ngIf="departments.length === 0" class="no-departments">
+    No departments found.
+  </div>
+
+  <ul class="department-list">
+    <li *ngFor="let department of departments" class="department-item">
+      <div class="department-card">
+        <div class="department">
+          <h3 class="department-name">{{ department.name }}</h3>
+        </div>
+        <div class="department-actions">
+          <button class="view-btn" (click)="toggleDetails(department.id)">
+            View Details
+          </button>
+        </div>
+      </div>
+
+      <!-- Блок деталей с анимацией -->
+      <div
+        class="department-details"
+        [@detailsAnimation]="
+          visibleDetails[department.id] ? 'visible' : 'hidden'
+        "
+      >
+        <div class="department-institute">
+          <span class="detail-title">Institute Name:</span>
+          <span class="detail-value">{{
+            departmentsDetails.get(department.id)?.institute.name
+          }}</span>
+        </div>
+        <span class="groups">Groups</span>
+        <div
+          *ngIf="
+            departmentsDetails.get(department.id)?.groups?.data?.length !== 0;
+            else noGroups
+          "
+        >
+          <div
+            *ngFor="
+              let group of departmentsDetails.get(department.id)?.groups?.data
+            "
+            class="department-groups"
+          >
+            <div class="groups-list">
+              <span class="detail-title">Groups Name:</span>
+              <span class="detail-value">{{ group.name }}</span>
+            </div>
+          </div>
+        </div>
+        <ng-template #noGroups>
+          <div>No groups available for this department.</div>
+        </ng-template>
+        <span class="teachers">Teachers</span>
+        <div
+          *ngFor="
+            let teacher of departmentsDetails.get(department.id)?.teachers?.data
+          "
+          class="department-teachers"
+        >
+          <div class="teacher-list">
+            <span class="detail-title">Teacher Name:</span>
+            <span class="detail-value">{{ teacher.firstName }}</span>
+            <span class="detail-value">{{ teacher.lastName }}</span>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+
+  <!-- Кнопки для переключения страниц -->
+  <div class="pagination-buttons">
+    <button
+      mat-raised-button
+      (click)="goToPreviousPage()"
+      [disabled]="currentPage === 1"
+    >
+      Previous
+    </button>
+    <button
+      mat-raised-button
+      (click)="goToNextPage()"
+      [disabled]="!hasMoreDepartments"
+    >
+      Next
+    </button>
+  </div>
+</div>

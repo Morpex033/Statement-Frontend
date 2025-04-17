@@ -1,0 +1,73 @@
+<div class="container">
+  <h1 class="title">Subject List</h1>
+
+  <div *ngIf="subjects.length === 0" class="no-subjects">
+    No subjects found.
+  </div>
+
+  <ul class="subject-list">
+    <li *ngFor="let subject of subjects" class="subject-item">
+      <div class="subject-card">
+        <div class="subject-info">
+          <h3 class="subject-name">{{ subject.name }}</h3>
+        </div>
+        <div class="student-actions">
+          <button class="view-btn" (click)="toggleDetails(subject.id)">
+            View Details
+          </button>
+        </div>
+      </div>
+
+      <!-- Блок деталей с анимацией -->
+      <div
+        class="subject-details"
+        [@detailsAnimation]="visibleDetails[subject.id] ? 'visible' : 'hidden'"
+      >
+        <span class="students">Students</span>
+        <div
+          class="students-list"
+          *ngFor="let student of subjectDetails.get(subject.id)?.students?.data"
+        >
+          <span class="student-name"
+            >Student name: {{ student.firstName }} {{ student.lastName }}</span
+          >
+        </div>
+        <span class="teachers">Teachers</span>
+        <div
+          class="teachers-list"
+          *ngFor="let teacher of subjectDetails.get(subject.id)?.teachers?.data"
+        >
+          <span class="teacher-name"
+            >Teacher name: {{ teacher.firstName }} {{ teacher.lastName }}</span
+          >
+        </div>
+        <span class="detail-title">Grades</span>
+        <div class="grade-list">
+          <span
+            class="grades-values"
+            *ngFor="let grade of subjectDetails.get(subject.id)?.grades?.data"
+          >
+            {{ grade.value }}
+          </span>
+        </div>
+      </div>
+    </li>
+  </ul>
+
+  <!-- Кнопки для переключения страниц -->
+  <div class="pagination-buttons">
+    <button
+      mat-raised-button
+      (click)="goToPreviousPage()"
+      [disabled]="currentPage === 1"
+    >
+      Previous
+    </button>
+    <button
+      mat-raised-button
+      (click)="goToNextPage()"
+      [disabled]="!hasMoreSubjects"
+    >
+      Next
+    </button>
+</div>

@@ -1,0 +1,168 @@
+.container {
+  width: 60%;
+  max-width: 800px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  margin: auto;
+}
+
+.title {
+  color: #4caf50;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.no-students {
+  font-size: 1.2rem;
+  color: #888;
+}
+
+.student-list {
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+}
+
+.student-item {
+  margin-bottom: 10px;
+}
+
+.student-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.student-info {
+  text-align: left;
+}
+
+.student-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.student-group {
+  font-size: 1rem;
+  color: #555;
+}
+
+.student-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.view-btn {
+  padding: 8px 16px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  background-color: #4caf50;
+  color: white;
+
+  &:hover {
+    background-color: #45a049;
+  }
+}
+
+.student-details {
+  background-color: #eef5ff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  margin-top: 5px;
+  overflow: hidden;
+}
+
+.student-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.detail-title {
+  font-weight: bold;
+  color: #333;
+}
+
+.detail-value {
+  color: #555;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.subject-name {
+  font-weight: bold;
+  color: #333;
+}
+
+.subject-grades {
+  font-weight: bold;
+  color: #555;
+  margin-top: 5px;
+}
+
+.grade-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  flex-direction: row;
+}
+
+.grade-value {
+  background-color: #4caf50;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 500px;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 500px;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+    max-height: 0;
+  }
+}

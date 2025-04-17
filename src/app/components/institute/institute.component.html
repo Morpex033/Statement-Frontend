@@ -1,0 +1,56 @@
+<div class="container">
+  <h1 class="title">Institute List</h1>
+
+  <div *ngIf="institutes.length === 0" class="no-institutes">No institutes</div>
+
+  <div class="institute-list">
+    <li class="institute-item" *ngFor="let institute of institutes">
+      <div class="institute-card">
+        <div class="institute-info">
+          <h3 class="institute-name">{{ institute.name }}</h3>
+        </div>
+        <div class="institute-actions">
+          <button class="view-btn" (click)="toggleDetails(institute.id)">
+            View Details
+          </button>
+        </div>
+      </div>
+
+      <!-- Блок деталей с анимацией -->
+      <div
+        class="institute-details"
+        [ngClass]="{ visible: visibleDetails[institute.id] }"
+      >
+        <span class="departments">Departments</span>
+        <div
+          class="department-list"
+          *ngFor="
+            let department of institutesDetails.get(institute.id)?.departments
+              ?.data
+          "
+        >
+          <span class="department-name"
+            >Department name: {{ department.name }}</span
+          >
+        </div>
+      </div>
+    </li>
+  </div>
+
+  <!-- Кнопки для переключения страниц -->
+  <div class="pagination-buttons">
+    <button
+      mat-raised-button
+      (click)="goToPreviousPage()"
+      [disabled]="currentPage === 1"
+    >
+      Previous
+    </button>
+    <button
+      mat-raised-button
+      (click)="goToNextPage()"
+      [disabled]="!hasMoreInstitutes"
+    >
+      Next
+    </button>
+</div>

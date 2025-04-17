@@ -1,0 +1,70 @@
+<div class="container">
+  <h1 class="title">Teacher List</h1>
+
+  <div *ngIf="teachers.length === 0" class="no-teachers">
+    No teachers found.
+  </div>
+
+  <ul class="teacher-list">
+    <li *ngFor="let teacher of teachers" class="teacher-item">
+      <div class="teacher-card">
+        <div class="teacher-info">
+          <h3 class="teacher-name">
+            {{ teacher.firstName }} {{ teacher.lastName }}
+          </h3>
+        </div>
+        <div class="teacher-actions">
+          <button class="view-btn" (click)="toggleDetails(teacher.id)">
+            View Details
+          </button>
+        </div>
+      </div>
+
+      <!-- Блок деталей с анимацией -->
+      <div
+        class="teacher-details"
+        [ngClass]="{ 'visible': visibleDetails[teacher.id] }"
+      >
+        <span class="subjects">Subjects</span>
+        <div
+          class="subject-list"
+          *ngFor="let subject of teachersDetails.get(teacher.id)?.subjects?.data"
+        >
+          <span class="subject-name">Subject name: {{ subject.name }}</span>
+        </div>
+        <span class="departments">Departments</span>
+        <div
+          class="department-list"
+          *ngFor="let department of teachersDetails.get(teacher.id)?.departments?.data"
+        >
+          <span class="department-name">Department name: {{ department.name }}</span>
+        </div>
+        <span class="grades">Grades</span>
+        <div class="grade-list">
+          <span
+            class="grade-value"
+            *ngFor="let grade of teachersDetails.get(teacher.id)?.grades?.data"
+            >{{ grade.value }}</span
+          >
+        </div>
+      </div>
+    </li>
+  </ul>
+
+  <!-- Кнопки для переключения страниц -->
+  <div class="pagination-buttons">
+    <button
+      mat-raised-button
+      (click)="goToPreviousPage()"
+      [disabled]="currentPage === 1"
+    >
+      Previous
+    </button>
+    <button
+      mat-raised-button
+      (click)="goToNextPage()"
+      [disabled]="!hasMoreTeachers"
+    >
+      Next
+    </button>
+</div>

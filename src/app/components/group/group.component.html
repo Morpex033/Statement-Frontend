@@ -1,0 +1,61 @@
+<div class="container">
+  <h1 class="title">Group List</h1>
+
+  <div *ngIf="groups.length === 0" class="no-groups">No groups found.</div>
+
+  <ul class="group-list">
+    <li *ngFor="let group of groups" class="group-item">
+      <div class="group-card">
+        <div class="group-info">
+          <h3 class="group-name">{{ group.name }}</h3>
+        </div>
+        <div class="group-actions">
+          <button class="view-btn" (click)="toggleDetails(group.id)">
+            View Details
+          </button>
+        </div>
+      </div>
+
+      <!-- Блок деталей с анимацией -->
+      <div
+        class="group-details"
+        [@detailsAnimation]="visibleDetails[group.id] ? 'visible' : 'hidden'"
+      >
+        <span class="group-departments">Departments</span>
+        <div class="group-details-row">
+          <span class="detail-title">Department Name:</span>
+          <span class="detail-value">{{
+            groupsDetails.get(group.id)?.department.name
+          }}</span>
+        </div>
+        <span class="group-students">Students</span>
+        <div
+          class="group-details-row"
+          *ngFor="let student of groupsDetails.get(group.id)?.students?.data"
+        >
+          <span class="detail-title">Student name:</span>
+          <span class="detail-value">{{
+            student.firstName + " " + student.lastName
+          }}</span>
+        </div>
+      </div>
+    </li>
+  </ul>
+
+  <!-- Кнопки для переключения страниц -->
+  <div class="pagination-buttons">
+    <button
+      mat-raised-button
+      (click)="goToPreviousPage()"
+      [disabled]="currentPage === 1"
+    >
+      Previous
+    </button>
+    <button
+      mat-raised-button
+      (click)="goToNextPage()"
+      [disabled]="!hasMoreGroups"
+    >
+      Next
+    </button>
+</div>

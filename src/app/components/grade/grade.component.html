@@ -1,0 +1,232 @@
+<div class="container">
+  <h1 class="title">Grade List</h1>
+
+  <button class="create-grade-button" (click)="createGrade()">
+    Create grade
+  </button>
+
+  <div *ngIf="isCreating" class="create-grade-form">
+    <form (ngSubmit)="onSubmit()" #gradeForm="ngForm">
+      <div class="form-group">
+        <label for="value">Grade</label>
+        <input
+          type="number"
+          id="value"
+          name="value"
+          [(ngModel)]="newGrade.value"
+          required
+          min="0"
+          max="100"
+          class="form-control"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="studentId">Student</label>
+        <input
+          type="text"
+          id="studentId"
+          name="studentId"
+          [(ngModel)]="newGrade.studentName"
+          (input)="onStudentInput($event)"
+          class="form-control"
+          placeholder="Student name"
+        />
+        <ul *ngIf="filteredStudents.length > 0" class="dropdown-menu">
+          <li
+            *ngFor="let student of filteredStudents"
+            (click)="onCreateFormStudentSelect(student)"
+          >
+            {{ student.firstName + " " + student.lastName }}
+          </li>
+        </ul>
+      </div>
+
+      <!-- Поле для выбора преподавателя -->
+      <div class="form-group">
+        <label for="teacherId">Teacher</label>
+        <input
+          type="text"
+          id="teacherId"
+          name="teacherId"
+          [(ngModel)]="newGrade.teacherName"
+          (input)="onTeacherInput($event)"
+          placeholder="Teacher name"
+        />
+        <ul *ngIf="filteredTeachers.length > 0" class="dropdown-menu">
+          <li
+            *ngFor="let teacher of filteredTeachers"
+            (click)="onCreateFormTeacherSelect(teacher)"
+          >
+            {{ teacher.firstName + " " + teacher.lastName }}
+          </li>
+        </ul>
+      </div>
+
+      <!-- Поле для выбора предмета -->
+      <div class="form-group">
+        <label for="subjectId">Subject</label>
+        <input
+          type="text"
+          id="subjectId"
+          name="subjectId"
+          [(ngModel)]="newGrade.subjectName"
+          (input)="onSubjectInput($event)"
+          placeholder="Subject name"
+        />
+        <ul *ngIf="filteredSubjects.length > 0" class="dropdown-menu">
+          <li
+            *ngFor="let subject of filteredSubjects"
+            (click)="onCreateFormSubjectSelect(subject)"
+          >
+            {{ subject.name }}
+          </li>
+        </ul>
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="gradeForm.invalid"
+        class="btn btn-primary"
+      >
+        Create grade
+      </button>
+    </form>
+  </div>
+
+  <div *ngIf="grades.length === 0" class="no-departments">No grades found.</div>
+
+  <ul class="grade-list">
+    <div *ngFor="let grade of grades">
+      <div class="grade-card">
+        <div class="grade">
+          <div class="student">
+            {{
+              "Student: " +
+                gradesDetails.get(grade.id)?.student.firstName +
+                " " +
+                gradesDetails.get(grade.id)?.student.lastName
+            }}
+          </div>
+          <div class="subject">
+            {{ "Subject: " + gradesDetails.get(grade.id)?.subject.name }}
+          </div>
+          <div class="grade-value">
+            {{ "Grade value: " + grade.value }}
+          </div>
+          <div class="grade-date">
+            {{ "Grade date: " + grade.date }}
+          </div>
+
+          <button class="update-button" (click)="onUpdate(grade)">
+            Update
+          </button>
+
+          <button class="delete-grade" (click)="onDelete(grade)">Delete</button>
+
+          <div
+            *ngIf="isUpdatingMap[grade.id]"
+            class="update-grade-form"
+          >
+            <form (ngSubmit)="saveUpdate()" #gradeForm="ngForm">
+              <div class="form-group">
+                <label for="value">Grade</label>
+                <input
+                  type="number"
+                  id="value"
+                  name="value"
+                  [(ngModel)]="updateGrade.value"
+                  required
+                  min="0"
+                  max="100"
+                  class="form-control"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="studentId">Student</label>
+                <input
+                  type="text"
+                  id="studentId"
+                  name="studentId"
+                  [(ngModel)]="updateGrade.studentName"
+                  (input)="onStudentInput($event)"
+                  class="form-control"
+                  placeholder="Student name"
+                />
+                <ul *ngIf="filteredStudents.length > 0" class="dropdown-menu">
+                  <li
+                    *ngFor="let student of filteredStudents"
+                    (click)="onUpdateFormStudentSelect(student)"
+                  >
+                    {{ student.firstName + " " + student.lastName }}
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Поле для выбора преподавателя -->
+              <div class="form-group">
+                <label for="teacherId">Teacher</label>
+                <input
+                  type="text"
+                  id="teacherId"
+                  name="teacherId"
+                  [(ngModel)]="updateGrade.teacherName"
+                  (input)="onTeacherInput($event)"
+                  placeholder="Teacher name"
+                />
+                <ul *ngIf="filteredTeachers.length > 0" class="dropdown-menu">
+                  <li
+                    *ngFor="let teacher of filteredTeachers"
+                    (click)="onUpdateFormTeacherSelect(teacher)"
+                  >
+                    {{ teacher.firstName + " " + teacher.lastName }}
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Поле для выбора предмета -->
+              <div class="form-group">
+                <label for="subjectId">Subject</label>
+                <input
+                  type="text"
+                  id="subjectId"
+                  name="subjectId"
+                  [(ngModel)]="updateGrade.subjectName"
+                  (input)="onSubjectInput($event)"
+                  placeholder="Subject name"
+                />
+                <ul *ngIf="filteredSubjects.length > 0" class="dropdown-menu">
+                  <li
+                    *ngFor="let subject of filteredSubjects"
+                    (click)="onUpdateFormSubjectSelect(subject)"
+                  >
+                    {{ subject.name }}
+                  </li>
+                </ul>
+              </div>
+
+              <button
+                type="submit"
+                [disabled]="gradeForm.invalid"
+                class="btn btn-primary"
+              >
+                Update grade
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pagination-button">
+      <button
+        *ngIf="pageNumber > 1"
+        class="previos-button"
+        (click)="loadPreviousPage()"
+      >
+        Previous page
+      </button>
+      <button *ngIf="hasMoreGrades" (click)="loadNextPage()">Next page</button>
+    </div>
+  </ul>
+</div>

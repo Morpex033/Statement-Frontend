@@ -1,0 +1,97 @@
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f7fc;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center; /* Выравнивание по горизонтали */
+  align-items: center; /* Выравнивание по вертикали */
+  height: 100vh; /* Высота на весь экран */
+  width: 100%; /* Ширина на весь экран */
+}
+
+.main-container {
+  width: 100%;
+  max-width: 1200px; /* Максимальная ширина контейнера */
+  margin: 0 auto;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.main-header {
+  text-align: center;
+  color: #4CAF50;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.main-header p {
+  color: #666;
+  font-size: 1.2rem;
+  margin-top: 10px;
+}
+
+.links-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.nav-link {
+  text-decoration: none;
+}
+
+.nav-button {
+  padding: 14px 28px; /* Увеличили размер кнопок */
+  font-size: 1.1rem;
+  border-radius: 8px; /* Сделали более округлыми */
+  cursor: pointer;
+  border: none;
+  outline: none;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Тень для объема */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Плавный переход */
+}
+
+/* Состояние кнопки по умолчанию */
+.nav-button.primary {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.nav-button.accent {
+  background-color: #ff4081;
+  color: white;
+}
+
+.nav-button.warn {
+  background-color: #ff9800;
+  color: white;
+}
+
+/* Наведение на кнопку */
+.nav-button:hover {
+  background-color: #45a049; /* Зеленый цвет при наведении */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Увеличиваем тень */
+}
+
+.nav-button.accent:hover {
+  background-color: #ff1d6f; /* Акцентный цвет */
+}
+
+.nav-button.warn:hover {
+  background-color: #ff8c00; /* Оранжевый цвет */
+}
+
+/* Поднимание кнопки при наведении */
+.nav-button:hover {
+  transform: translateY(-5px); /* Кнопка поднимается */
+}
