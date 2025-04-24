@@ -166,4 +166,28 @@ export class StatementComponent {
   redirectOnExcelViewer(statementId: string) {
     window.open(`/excel-viewer/${statementId}`, '_blank');
   }
+
+  downloadExcel(id: string) {
+    this.statementService.getExcel(id).subscribe((response: Blob) => {
+      // Создаем объект URL для Blob
+      const url = window.URL.createObjectURL(response);
+
+      // Создаем элемент <a>
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'file.xlsx'; // Указываем имя файла для скачивания
+
+      // Программно вызываем клик по ссылке
+      link.click();
+
+      // Освобождаем ресурсы
+      window.URL.revokeObjectURL(url);
+    });
+  }
+
+  deleteStatement(id: string){
+    this.statementService.deleteStatement(id).subscribe(() =>{
+      this.ngOnInit();
+    })
+  }
 }

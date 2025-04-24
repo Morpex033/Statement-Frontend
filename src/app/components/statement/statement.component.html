@@ -56,40 +56,20 @@
           <h3 class="statement-name">{{ statement.index }}</h3>
         </div>
         <div class="statement-actions">
-          <button class="view-btn" (click)="toggleDetails(statement.id)">
-            View Details
-          </button>
           <button
             class="view-btn"
             (click)="redirectOnExcelViewer(statement.id)"
           >
             View Excel
           </button>
+          <button class="download-btn" (click)="downloadExcel(statement.id)">
+            Download Excel
+          </button>
+          <button class="delete-btn" (click)="deleteStatement(statement.id)">
+            Delete Statement
+          </button>
         </div>
       </div>
-
-      <!-- Блок деталей с анимацией
-      <div
-        class="statement-details"
-        [ngClass]="{ visible: visibleDetails[statement.id] }"
-      >
-        <span class="statements">Grades</span>
-        <div
-          class="grade-list"
-          *ngFor="
-            let grade of statementsDetails.get(statement.id)?.grades?.data
-          "
-        >
-          <span
-            class="grade-value"
-            *ngIf="
-              getFullInfo(grade.teacherId, grade.studentId, grade.subjectId)
-                | async as fullInfo
-            "
-            >Grade: {{ grade.value }} Teacher: {{ fullInfo }}
-          </span>
-        </div>
-      </div> -->
     </li>
   </div>
 

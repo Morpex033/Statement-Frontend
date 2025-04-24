@@ -1,21 +1,17 @@
 <div class="excel-viewer">
   <!-- Кнопки для переключения листов -->
-  <div class="sheet-buttons">
-    <button
-      *ngFor="let sheet of allSheets"
-      (click)="switchSheet(sheet)"
-      [class.active]="sheet === allSheets[currentSheetIndex]"
-    >
-      {{ sheet }}
+  <div class="group-buttons">
+    <button *ngFor="let group of groups" (click)="selectGroup(group)">
+      {{ group.name }}
     </button>
   </div>
 
-  <div class="update-buttons">
+  <div class="update-buttons" *ngIf="selectedGroup">
     <button *ngIf="!isUpdating" (click)="updateExcel()" class="update-button">
       Update table
     </button>
     <button
-      *ngIf="isUpdating"
+      *ngIf="isUpdating && incorrectGrade.size === 0"
       (click)="saveUpdate()"
       class="save-update-button"
     >
@@ -30,25 +26,57 @@
     </button>
   </div>
 
-  <!-- Таблица с данными текущего листа -->
-  <table *ngIf="tableData.length > 0">
-    <thead>
-      <tr>
-        <th *ngFor="let header of tableData[0]">{{ header }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let row of tableData.slice(1); let rowIndex = index">
-        <td *ngFor="let cell of row; let colIndex = index">
-          <input
-            [value]="cell"
-            (input)="onCellChange(rowIndex + 1, colIndex, $event)"
-            [readonly]="!isUpdating"
-          />
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div *ngIf="selectedGroup">
+    <h2>{{ selectedGroup.name }}</h2>
 
-  <div *ngIf="tableData.length === 0">Данные не загружены.</div>
+    <div *ngFor="let student of selectedGroup.students">
+      <h3>Студент: {{ student.firstName }} {{ student.lastName }}</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Предмет</th>
+            <th>Оценка</th>
+            <th style="display: none">Комментарий</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let grade of student.grades">
+            <td>{{ grade.subject }}</td>
+            <td>
+              <input
+                [(ngModel)]="grade.value"
+                name="gradeValue"
+                type="number"
+                #gradeInput="ngModel"
+                required
+                min="0"
+                max="100"
+                step="1"
+                [readOnly]="!isUpdating"
+                (input)="validateValue($event, grade)"
+              />
+              <div
+                *ngIf="gradeInput.invalid && gradeInput.touched"
+                class="error"
+              >
+                <div *ngIf="gradeInput.errors?.['min']">
+                  Значение не может быть меньше 0
+                </div>
+                <div *ngIf="gradeInput.errors?.['max']">
+                  Значение не может быть больше 100
+                </div>
+                <div *ngIf="gradeInput.errors?.['required']">
+                  Значение обязательно
+                </div>
+              </div>
+            </td>
+            <td style="display: none">{{ grade.comment }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div *ngIf="groups.length === 0">Данные не загружены.</div>
 </div>

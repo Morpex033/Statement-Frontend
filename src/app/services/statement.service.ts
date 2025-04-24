@@ -52,4 +52,16 @@ export class StatementService {
       responseType: 'blob' as 'json',
     });
   }
+
+  getStatementById(statementId: string): Observable<any> {
+    return this.http.get<any>(this.apiUrl + `/${statementId}`);
+  }
+
+  updateStatement(statementId: string, body: any): Observable<any> {
+    return this.http.put<any>(this.apiUrl + `/${statementId}`, body);
+  }
+
+  deleteStatement(statementId: string): Observable<void> {
+    return this.http.delete<void>(this.apiUrl + `/${statementId}`);
+  }
 }
